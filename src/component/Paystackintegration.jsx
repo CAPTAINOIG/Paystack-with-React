@@ -3,16 +3,22 @@ import PaystackPop from '@paystack/inline-js'
 
 
 const Paystackintegration = () => {
-  const [email, setEmail] = useState("")
-  const [amount, setAmount] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("");
+  const [amount, setAmount] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
-  const payWithPayStack =(e)=>{
-    e.preventDefault()
-     const paystack = new PaystackPop()
-     paystack.newTransaction({
-      key: "pk_test_735675141fc133bb647f731aa99e663160380c80",
+  // const publicKey = process.env.VITE_APP_PAYSTACK_KEY;
+  const publicKey = import.meta.env.VITE_APP_PAYSTACK_KEY;
+
+  const payWithPayStack = (e) => {
+    if(email === "" || firstName === "" || lastName === "" || amount === ""){
+      alert('all input field are required')
+  }  else{
+    e.preventDefault();
+    const paystack = new PaystackPop();
+    paystack.newTransaction({
+      publicKey: publicKey,
       amount: amount * 100,
       email,
       firstName,
@@ -30,6 +36,7 @@ const Paystackintegration = () => {
       }
      })
   }
+}
 
   return (
     <div className='w3-container w3-row '>
@@ -50,13 +57,13 @@ const Paystackintegration = () => {
             </div>
             <div className='form-group'>
               <label htmlFor="first-name">First Name</label>
-              <input type="first-name" id='first-name' className='w3-input' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
+              <input type="text" id='first-name' className='w3-input' onChange={(e) => setFirstName(e.target.value)} value={firstName} />
             </div>
             <div className='form-group'>
               <label htmlFor="last-name">Last Name</label>
-              <input type="last-name" id='last-name' className='w3-input' onChange={(e) => setLastName(e.target.value)} value={lastName} />
+              <input type="text" id='last-name' className='w3-input' onChange={(e) => setLastName(e.target.value)} value={lastName} />
             </div>
-            <button className='w3-btn w3-block w3-purple' type='submit' onClick={payWithPayStack}>PAY</button>
+            <button style={{marginBottom: 10}} className='w3-btn w3-block w3-purple' type='submit' onClick={payWithPayStack}>PAY</button>
           </form>
         </div>
       </div>
