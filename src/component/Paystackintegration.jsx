@@ -7,18 +7,16 @@ const Paystackintegration = () => {
   const [amount, setAmount] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-  // const publicKey = process.env.VITE_APP_PAYSTACK_KEY;
-  const publicKey = import.meta.env.VITE_APP_PAYSTACK_KEY;
-
+  
   const payWithPayStack = (e) => {
+    const publicKey = import.meta.env.VITE_APP_PAYSTACK_KEY;
     if(email === "" || firstName === "" || lastName === "" || amount === ""){
       alert('all input field are required')
   }  else{
     e.preventDefault();
     const paystack = new PaystackPop();
     paystack.newTransaction({
-      publicKey: publicKey,
+      key: publicKey,
       amount: amount * 100,
       email,
       firstName,
